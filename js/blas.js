@@ -20,7 +20,7 @@ export default class Matrix {
     }
 
     setValue(row, col, value) {
-        i = this.dataIndex(row, col);
+        let i = this.dataIndex(row, col);
         this.data[i] = value;
     }
 };
