@@ -5,9 +5,10 @@ export default class Matrix {
         this.data = Array(nrows * ncols);
     }
 
+    // rows and columns are zero-based:
     dataIndex(row, col) {
         if (row < 0 || row >= this.nrows || col < 0 || col >= this.ncols)  {
-            throw new Error("invalid matrix location");
+            throw new RangeError("invalid matrix location");
         } else {
             let i = row * this.ncols + col;
             return i;

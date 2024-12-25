@@ -11,23 +11,23 @@ describe('Matrix', function() {
     });
 
     it('throws for negative row index', () => {
-        expect( function(){ m.getValue(-1, 0) } ).toThrow(new Error("invalid matrix location"));
+        expect( function(){ m.getValue(-1, 0) } ).toThrow(new RangeError("invalid matrix location"));
     });
 
     it('throws for excessive row index', () => {
-        expect( function(){ m.getValue((square_size + 1), 0) } ).toThrow(new Error("invalid matrix location"));
+        expect( function(){ m.getValue((square_size + 1), 0) } ).toThrow(new RangeError("invalid matrix location"));
     });
 
     it('throws for negative column index', () => {
-        expect( function(){ m.getValue(0, -1) } ).toThrow(new Error("invalid matrix location"));
+        expect( function(){ m.getValue(0, -1) } ).toThrow(new RangeError("invalid matrix location"));
     });
 
     it('throws for excessive column index', () => {
-        expect( function(){ m.getValue(0, (square_size + 1)) } ).toThrow(new Error("invalid matrix location"));
+        expect( function(){ m.getValue(0, (square_size + 1)) } ).toThrow(new RangeError("invalid matrix location"));
     });
 
     it('sets a valid matrix element', () => {
-        expect( function() { m.setValue(0, 0, test_value)}).not.toThrow(new Error("invalid matrix location"));
+        expect( function() { m.setValue(0, 0, test_value)}).not.toThrow(new RangeError("invalid matrix location"));
     });
 
     it('returns the value of a valid matrix element', () => {
