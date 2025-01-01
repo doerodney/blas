@@ -9,5 +9,5 @@ To clone and begin development, it is necessary to:
 * Clone this repository.
 * Have node.js installed.
 * `cd` to the `js` directory.
-* Execute `npm init` to get dependencies.
+* Execute `npm install` to get dependencies.
 * Execute `npm test` to run unit tests.
