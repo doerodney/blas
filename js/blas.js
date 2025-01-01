@@ -21,6 +21,12 @@ export default class Matrix {
         return(this.data[i]);
     }
 
+    setRowContent(row, content) {
+        for (let col = 0; col < this.nrows; col++) {
+            this.setValue(row, content[col]);
+        }
+    }
+
     // rows and columns are zero-based:
     setValue(row, col, value) {
         let i = this.dataIndex(row, col);

@@ -35,4 +35,12 @@ describe('Matrix', function() {
         expect(result).toBe(test_value);
     });
 
+    let contents = Array.from( {length: square_size}, () => Array(square_size).fill(0));
+
+    it('creates an N x N matrix initialized to 0', () => {
+        expect(contents.length).toBe(square_size);
+        expect(contents[0].length).toBe(square_size);
+        expect(contents[(square_size - 1)].length).toBe(square_size);
+    });
+
 });
