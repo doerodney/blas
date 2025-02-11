@@ -18,6 +18,7 @@ sub matrix_new {
   return \%m;
 }
 
+
 sub matrix_elem_get
 {
   my ($rm, $row, $col) = @_;
@@ -26,6 +27,7 @@ sub matrix_elem_get
   my $elem = $rdata->[$idx];
   return $elem;
 }  
+
 
 sub matrix_elem_set
 {
@@ -46,27 +48,26 @@ sub matrix_index {
   return $idx;
 }
 
+
+sub matrix_interchange_rows {
+  my ($rm, $a, $b) = @_;
+
+  my $ncols = matrix_ncols($rm);
+  my @buf = (0) * $ncols;
+
+}
+
+
 sub matrix_ncols {
   my $rm = shift;
   return $rm->{"ncols"};
 }
 
+
 sub matrix_nrows {
   my $rm = shift;
   return $rm->{"nrows"};
 }
-
-sub matrix_reduce {
-  my $rm = shift;
-  my $nrows = matrix_nrows($rm);
-  my $ncols = matrix_ncols($rm);
- 
-  matrix_print($rm);
-
-  for (my $pivot = 0; $pivot < $nrows; $pivot++) {
-    my $next = $pivot + 1;
-    # START HERE
-
 
 
 sub matrix_print {
@@ -84,6 +85,33 @@ sub matrix_print {
       $str .= "$space$value";
     }
     print "$str\n";
+  }
+}
+
+
+sub matrix_reduce {
+  my $rm = shift;
+  my $nrows = matrix_nrows($rm);
+  my $ncols = matrix_ncols($rm);
+ 
+  matrix_print($rm);
+
+  for (my $pivot = 0; $pivot < $nrows; $pivot++) {
+    my $next = $pivot + 1;
+    # START HERE
+  }
+
+}
+
+
+sub matrix_scale_row {
+  my ($rm, $row, $scale) = @_;
+
+  my $ncols = matrix_ncols($rm);
+
+  for (my $col = 0; $col < $ncols; $col++) {
+    my $value = matrix_elem_get($rm, $row, $col);
+    matrix_elem_set($rm, $row, $col, ($value * $scale));
   }
 }
 

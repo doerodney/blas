@@ -34,45 +34,4 @@ export default class Matrix {
     }
 };
 
-/*--
-Plagiarized from Sedgewick's Algorithms in C:
 
-eliminate() {
-    int i, j, k, max;
-    float t;
-
-    for (i = 1; i <= N; i++) {
-        max = i;
-        for (j = i + 1; j <= N; j++) {
-            if (abs(a[i][j] > abs(a[max][i])) {
-                max = j;
-            }
-        }    
-    }
-    for (k = i; k <= N + 1; k++) {
-        t = a[i][k];
-        a[i][k] = a[max][k];
-        a[max][k] = t;
-    }
-
-    for (j = i + 1; j < N; j++) {
-        for (k = N + 1; k >= i; k--) {
-            a[j][k] -= a[i][k] * a[j][i]/a[i][i];
-        }
-    }
-}
-
-substitute() {
-    int j, k;
-    float t;
-    for (j = N; j >= 1; j--) {
-        t = 0.0;
-        for (k = j + 1; k <= N; k++) {
-            t += a[j][k] * x[k];
-        }
-        
-        x[j] = (a[j][N + 1] - t) / a[j][j];
-    }
-}
-
---*/
