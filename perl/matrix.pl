@@ -138,24 +138,18 @@ sub matrix_reduce {
 
   matrix_print($rm);
 
-  # Start at the bottom row, and convert values to the left of the pivot to 0.
-  for (my $pivot = ($nrows - 1); $pivot >= 1; $pivot--) {
-    my $prev = $pivot - 1;
-    for (my $col = 0; $col < $pivot; $col++) {
-      # Scale the current row to have a left value of 1.
-      # Get the value in the left column: 
-      my $value = matrix_elem_get($rm, $pivot, $col);
-      if ($value != 0) {
+  # Start at the top, and apply scale and addition to rows below to clear left column:
+  for (my $pivot = 0; $pivot < $nrows; $pivot++) { 
+    for (my $row = $pivot + 1; $row < $nrows; $row++)  {
+      my $pivot_value = matrix_elem_get($rm, $pivot, $pivot);
+      my $row_value = matrix_elem_get($rm, $row, $pivot);
+      if ($pivot_value != 0) {
         # Scale the row to have -1 in the left column:
-        matrix_scale_row($rm, $pivot, (-1/$value));
+        my $scale = -1 * $pivot_value / $row_value;
+        matrix_scale_row($rm, $row, $scale);
+        matrix_add_row_to_row($rm, $pivot, $row);
       }
 
-      # Scale the previous row to have a left value of 1:
-      $value = matrix_elem_get($rm, $prev, $col);
-      if ($value != 0) {
-        # Add prev row to current row:
-        matrix_add_row_to_row($rm, $prev, $pivot);
-      }
       matrix_print($rm);
     }
   }
