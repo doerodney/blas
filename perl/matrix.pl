@@ -42,6 +42,53 @@ sub matrix_clean {
   # and add the row to the pivot row.
 }  
 
+
+sub matrix_convert_to_reduced_row_echelon_form {
+  my $rm = shift;
+  my $nrows = matrix_nrows($rm);
+
+  matrix_convert_to_row_echelon_form($rm);
+
+  # Convert to reduced row echelon form:
+  for (my $pivot = 0; $pivot < $nrows; $pivot++) { 
+    my $pivot_value = matrix_elem_get($rm, $pivot, $pivot);
+    my $scale = 1 / $pivot_value;
+    matrix_scale_row($rm, $pivot, $scale);
+  }
+
+  # matrix_print($rm);
+}
+
+
+sub matrix_convert_to_row_echelon_form {
+  my $rm = shift;
+  my $nrows = matrix_nrows($rm);
+  my $ncols = matrix_ncols($rm);
+
+  # matrix_print($rm);
+
+  # Start at the top, and apply scale and addition to rows below to clear left column:
+  for (my $pivot = 0; $pivot < $nrows; $pivot++) { 
+    for (my $current_row = $pivot + 1; $current_row < $nrows; $current_row++)  {
+      my $pivot_value = matrix_elem_get($rm, $pivot, $pivot);
+      my $current_value = matrix_elem_get($rm, $current_row, $pivot);
+      
+      if (($pivot_value != 0) && ($current_value != 0)) {
+        # Scale the row to have -1 in the left column:
+        my $scale = -1 * $pivot_value / $current_value;
+        matrix_scale_row($rm, $current_row, $scale);
+        
+        # Add the pivot row to the row to get a 0 in ($current_row, $pivot), which is 
+        # the row below the pivot row.
+        matrix_add_row_to_row($rm, $pivot, $current_row);
+      }
+
+      # matrix_print($rm);
+    }
+  }
+}
+
+
 sub matrix_elem_get {
   my ($rm, $row, $col) = @_;
   my $idx = matrix_index($rm, $row, $col);
@@ -130,32 +177,6 @@ sub matrix_print {
 }
 
 
-# This is not correct!
-sub matrix_reduce {
-  my $rm = shift;
-  my $nrows = matrix_nrows($rm);
-  my $ncols = matrix_ncols($rm);
-
-  matrix_print($rm);
-
-  # Start at the top, and apply scale and addition to rows below to clear left column:
-  for (my $pivot = 0; $pivot < $nrows; $pivot++) { 
-    for (my $row = $pivot + 1; $row < $nrows; $row++)  {
-      my $pivot_value = matrix_elem_get($rm, $pivot, $pivot);
-      my $row_value = matrix_elem_get($rm, $row, $pivot);
-      if ($pivot_value != 0) {
-        # Scale the row to have -1 in the left column:
-        my $scale = -1 * $pivot_value / $row_value;
-        matrix_scale_row($rm, $row, $scale);
-        matrix_add_row_to_row($rm, $pivot, $row);
-      }
-
-      matrix_print($rm);
-    }
-  }
-}
-
-
 sub matrix_scale_row {
   my ($rm, $row, $scale) = @_;
 
@@ -204,5 +225,8 @@ matrix_elem_set($rm, 2, 3, 39);
 
 matrix_print($rm);
 
-matrix_reduce($rm);
+# matrix_convert_to_row_echelon_form($rm);
+matrix_convert_to_reduced_row_echelon_form($rm);
+
+matrix_print($rm);
 
