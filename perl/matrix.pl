@@ -36,10 +36,23 @@ sub matrix_add_row_to_row {
 
 sub matrix_clean {
   my $rm = shift;
+  my $nrows = matrix_nrows($rm);
 
   # Test that pivot values are non-zero. 
   # If found, find a row whose value in the pivot column is non-zero, 
   # and add the row to the pivot row.
+  for (my $pivot = 0; $pivot < $nrows; $pivot++) {
+    my $value = matrix_elem_get($rm, $pivot, $pivot);
+    if ($value == 0) {
+      for (my $row = 0; $row < $nrows; $row++) {
+        my $x = matrix_elem_get($rm, $row, $row);
+        if ($x != 0) {
+          matrix_add_row_to_row($rm, $row, $pivot);
+          last;
+        }
+      }
+    }
+  }
 }  
 
 
@@ -78,6 +91,10 @@ sub matrix_convert_to_row_echelon_form {
   my $rm = shift;
   my $nrows = matrix_nrows($rm);
   my $ncols = matrix_ncols($rm);
+
+  matrix_print($rm);
+
+  matrix_clean($rm);
 
   matrix_print($rm);
 
@@ -222,10 +239,10 @@ for (my $row = 0; $row < $NROWS; $row++) {
   }
 }
 
-matrix_elem_set($rm, 0, 0, 10);
+matrix_elem_set($rm, 0, 0, 0);
 matrix_elem_set($rm, 0, 1, 5);
 matrix_elem_set($rm, 0, 2, 1);
-matrix_elem_set($rm, 0, 3, 126);
+matrix_elem_set($rm, 0, 3, 26);
 
 matrix_elem_set($rm, 1, 0, 1);
 matrix_elem_set($rm, 1, 1, 1);
